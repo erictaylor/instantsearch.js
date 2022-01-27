@@ -691,6 +691,7 @@ describe('connectDynamicWidgets', () => {
       expect(
         dynamicWidgets.getRenderState(existingRenderState, createInitOptions())
       ).toEqual({
+        PREVENT_RENDER: true,
         dynamicWidgets: {
           attributesToRender: [],
           widgetParams,
@@ -718,6 +719,7 @@ describe('connectDynamicWidgets', () => {
           createRenderOptions()
         )
       ).toEqual({
+        PREVENT_RENDER: true,
         dynamicWidgets: {
           attributesToRender: ['test1'],
           widgetParams,
