@@ -32,6 +32,7 @@ const createFakeSpeechRecognition = (): jest.Mock => {
 
 describe('VoiceSearchHelper', () => {
   afterEach(() => {
+    // @ts-expect-error
     delete window.webkitSpeechRecognition;
     // @ts-expect-error
     delete window.SpeechRecognition;
@@ -70,6 +71,7 @@ describe('VoiceSearchHelper', () => {
   });
 
   it('is supported with webkitSpeechRecognition', () => {
+    // @ts-expect-error this is a fake implementation
     window.webkitSpeechRecognition = () => {};
     const voiceSearchHelper = createVoiceSearchHelper({
       searchAsYouSpeak: false,
@@ -146,12 +148,14 @@ describe('VoiceSearchHelper', () => {
     simulateListener.result({
       results: [
         (() => {
-          const obj = [
-            {
-              transcript: 'Hello World',
-            },
-          ];
-          (obj as any).isFinal = true;
+          const obj = Object.assign(
+            [
+              {
+                transcript: 'Hello World',
+              },
+            ],
+            { isFinal: true }
+          );
           return obj;
         })(),
       ],

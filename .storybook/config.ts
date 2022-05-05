@@ -13,6 +13,8 @@ const categories = [
   'Sorting',
 ];
 
+type Story = { kind: string };
+
 addParameters({
   options: {
     showRoots: true,
@@ -22,7 +24,7 @@ addParameters({
       brandUrl: 'https://github.com/algolia/instantsearch.js',
     }),
     panelPosition: 'bottom',
-    storySort(a: any[], b: any[]) {
+    storySort(a: Story[], b: Story[]) {
       const categoryA = a[1].kind.split('|')[0];
       const categoryB = b[1].kind.split('|')[0];
 

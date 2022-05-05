@@ -67,6 +67,7 @@ module.exports = {
         'valid-jsdoc': 'off',
         'no-redeclare': 'off',
         '@typescript-eslint/no-redeclare': ['error'],
+        '@typescript-eslint/no-explicit-any': ['error'],
       },
     },
     {

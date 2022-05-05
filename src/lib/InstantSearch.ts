@@ -156,7 +156,7 @@ class InstantSearch<
   public templatesConfig: Record<string, unknown>;
   public renderState: RenderState = {};
   public _stalledSearchDelay: number;
-  public _searchStalledTimer: any;
+  public _searchStalledTimer: ReturnType<typeof setTimeout> | null;
   public _isSearchStalled: boolean;
   public _initialUiState: UiState;
   public _initialResults: InitialResults | null;
@@ -218,14 +218,18 @@ For more information, visit https://www.algolia.com/doc/guides/getting-insights-
     }
 
     warning(
-      !(options as any).searchParameters,
+      !(options as Record<string, unknown>).searchParameters,
       `The \`searchParameters\` option is deprecated and will not be supported in InstantSearch.js 4.x.
 
 You can replace it with the \`configure\` widget:
 
 \`\`\`
 search.addWidgets([
-  configure(${JSON.stringify((options as any).searchParameters, null, 2)})
+  configure(${JSON.stringify(
+    (options as Record<string, unknown>).searchParameters,
+    null,
+    2
+  )})
 ]);
 \`\`\`
 
@@ -453,7 +457,7 @@ See ${createDocumentationLink({
       // to not throw errors
       const fakeClient = {
         search: () => new Promise(noop),
-      } as any as SearchClient;
+      } as unknown as SearchClient;
 
       this._mainHelperSearch = mainHelper.search.bind(mainHelper);
       mainHelper.search = () => {
@@ -485,7 +489,7 @@ See ${createDocumentationLink({
       // To avoid breaking changes, we make the error available in both
       // `error` and `error.error`
       // @MAJOR emit only error
-      (error as any).error = error;
+      (error as Error & { error: Error }).error = error;
       this.emit('error', error);
     });
 
@@ -537,7 +541,7 @@ See ${createDocumentationLink({
   public dispose(): void {
     this.scheduleSearch.cancel();
     this.scheduleRender.cancel();
-    clearTimeout(this._searchStalledTimer);
+    clearTimeout(this._searchStalledTimer!);
 
     this.removeWidgets(this.mainIndex.getWidgets());
     this.mainIndex.dispose();
@@ -567,7 +571,7 @@ See ${createDocumentationLink({
 
   public scheduleRender = defer(() => {
     if (!this.mainHelper!.hasPendingRequests()) {
-      clearTimeout(this._searchStalledTimer);
+      clearTimeout(this._searchStalledTimer!);
       this._searchStalledTimer = null;
       this._isSearchStalled = false;
     }

@@ -7,13 +7,13 @@ import type { VNode } from 'preact';
  */
 const preactMount = mount as unknown as <TProps>(
   node: VNode<TProps>
-) => ReactWrapper<TProps, any>;
+) => ReactWrapper<TProps, unknown>;
 
 /**
  * @deprecated please use testing-library in new tests
  */
 const preactShallow = shallow as unknown as <TProps>(
   node: VNode<TProps>
-) => ShallowWrapper<TProps, any>;
+) => ShallowWrapper<TProps, unknown>;
 
 export { preactMount as mount, preactShallow as shallow };

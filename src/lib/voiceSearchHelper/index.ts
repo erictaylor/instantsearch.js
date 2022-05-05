@@ -1,7 +1,7 @@
 // `SpeechRecognition` is an API used on the browser so we can safely disable
 // the `window` check.
 /* eslint-disable no-restricted-globals */
-/* global SpeechRecognition SpeechRecognitionEvent */
+/* global SpeechRecognition SpeechRecognitionEvent SpeechRecognitionErrorEvent */
 import type {
   CreateVoiceSearchHelper,
   Status,
@@ -15,9 +15,8 @@ const createVoiceSearchHelper: CreateVoiceSearchHelper =
     onQueryChange,
     onStateChange,
   }) {
-    const SpeechRecognitionAPI: new () => SpeechRecognition =
-      (window as any).webkitSpeechRecognition ||
-      (window as any).SpeechRecognition;
+    const SpeechRecognitionAPI =
+      window.webkitSpeechRecognition || window.SpeechRecognition;
     const getDefaultState = (status: Status): VoiceListeningState => ({
       status,
       transcript: '',
@@ -51,8 +50,8 @@ const createVoiceSearchHelper: CreateVoiceSearchHelper =
       });
     };
 
-    const onError = (event: Event): void => {
-      setState({ status: 'error', errorCode: (event as any).error });
+    const onError = (event: SpeechRecognitionErrorEvent): void => {
+      setState({ status: 'error', errorCode: event.error });
     };
 
     const onResult = (event: SpeechRecognitionEvent): void => {

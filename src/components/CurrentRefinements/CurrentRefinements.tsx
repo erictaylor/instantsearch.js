@@ -28,7 +28,7 @@ const createItemKey = ({
     .filter(Boolean)
     .join(':');
 
-const handleClick = (callback: () => void) => (event: any) => {
+const handleClick = (callback: () => void) => (event: MouseEvent) => {
   if (isSpecialClick(event)) {
     return;
   }

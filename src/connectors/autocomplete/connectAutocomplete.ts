@@ -9,7 +9,7 @@ import {
   noop,
   warning,
 } from '../../lib/utils';
-import type { Hits, Connector, WidgetRenderState } from '../../types';
+import type { Hit, Connector, WidgetRenderState } from '../../types';
 
 const withUsage = createDocumentationMessageGenerator({
   name: 'autocomplete',
@@ -43,7 +43,7 @@ export type AutocompleteRenderState = {
     /**
      * The resolved hits from the index matching the query.
      */
-    hits: Hits;
+    hits: Hit[];
 
     /**
      * The full results object from the Algolia API.
@@ -89,20 +89,20 @@ const connectAutocomplete: AutocompleteConnector = function connectAutocomplete(
     const { escapeHTML = true } = widgetParams || {};
 
     warning(
-      !(widgetParams as any).indices,
+      !(widgetParams as Record<string, unknown>).indices,
       `
 The option \`indices\` has been removed from the Autocomplete connector.
 
 The indices to target are now inferred from the widgets tree.
 ${
-  Array.isArray((widgetParams as any).indices)
+  Array.isArray((widgetParams as Record<string, unknown>).indices)
     ? `
 An alternative would be:
 
 const autocomplete = connectAutocomplete(renderer);
 
 search.addWidgets([
-  ${(widgetParams as any).indices
+  ${(widgetParams as Record<string, Array<{ value: string }>>).indices
     .map(({ value }: { value: string }) => `index({ indexName: '${value}' }),`)
     .join('\n  ')}
   autocomplete()

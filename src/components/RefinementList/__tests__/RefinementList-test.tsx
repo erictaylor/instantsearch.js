@@ -521,7 +521,7 @@ describe('RefinementList', () => {
     it('with facets and show more', () => {
       const templates = {
         item: (item: RefinementListItemData) => item.value,
-        showMoreText: (x: any) => JSON.stringify(x),
+        showMoreText: (x: { isShowingMore: boolean }) => JSON.stringify(x),
       };
       type TestTemplates = typeof templates;
 
@@ -562,7 +562,7 @@ describe('RefinementList', () => {
     it('with facets and disabled show more', () => {
       const templates = {
         item: (item: RefinementListItemData) => item.value,
-        showMoreText: (x: any) => JSON.stringify(x),
+        showMoreText: (x: { isShowingMore: boolean }) => JSON.stringify(x),
       };
       type TestTemplates = typeof templates;
 

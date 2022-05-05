@@ -1,4 +1,4 @@
-function isPrimitive(obj: any): boolean {
+function isPrimitive(obj: unknown): boolean {
   return obj !== Object(obj);
 }
 

@@ -3,7 +3,7 @@ import { createSingleSearchResponse } from '../createAPIResponse';
 describe('createSingleSearchResponse', () => {
   it('calculates nbHits from hits', () => {
     expect(
-      createSingleSearchResponse({
+      createSingleSearchResponse<unknown>({
         hits: Array.from({ length: 100 }),
       })
     ).toEqual(

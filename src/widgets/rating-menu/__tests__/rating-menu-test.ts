@@ -15,8 +15,10 @@ import {
 } from '../../../../test/mock/createWidget';
 import { createSingleSearchResponse } from '../../../../test/mock/createAPIResponse';
 import { createInstantSearch } from '../../../../test/mock/createInstantSearch';
+import type { RatingMenuTemplates } from '../rating-menu';
 import ratingMenu from '../rating-menu';
 import { castToJestMock } from '../../../../test/utils/castToJestMock';
+import type { RefinementListProps } from '../../../components/RefinementList/RefinementList';
 
 const render = castToJestMock(preactRender);
 jest.mock('preact', () => {
@@ -105,7 +107,7 @@ describe('ratingMenu()', () => {
 
     const [firstRender, secondRender] = render.mock.calls;
 
-    const { children, ...rootProps } = (firstRender[0] as VNode<any>).props;
+    const { children, ...rootProps } = (firstRender[0] as VNode).props;
 
     expect(render).toHaveBeenCalledTimes(2);
     expect(rootProps).toMatchSnapshot();
@@ -135,7 +137,10 @@ describe('ratingMenu()', () => {
     const [firstRender] = render.mock.calls;
 
     expect(render).toHaveBeenCalledTimes(1);
-    expect((firstRender[0] as VNode<any>).props.facetValues).toEqual([
+    expect(
+      (firstRender[0] as VNode<RefinementListProps<RatingMenuTemplates>>).props
+        .facetValues
+    ).toEqual([
       {
         count: 42,
         isRefined: true,
@@ -271,8 +276,11 @@ describe('ratingMenu()', () => {
     );
 
     expect(
-      (render.mock.calls[render.mock.calls.length - 1][0] as VNode<any>).props
-        .facetValues
+      (
+        render.mock.calls[render.mock.calls.length - 1][0] as VNode<
+          RefinementListProps<RatingMenuTemplates>
+        >
+      ).props.facetValues
     ).toEqual([
       {
         count: 1000,

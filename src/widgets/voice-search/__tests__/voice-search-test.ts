@@ -122,7 +122,9 @@ See documentation: https://www.algolia.com/doc/api-reference/widgets/voice-searc
 
       widgetInit(helper);
 
-      expect((widget as any)._voiceSearchHelper).toBe(voiceHelper);
+      expect((widget as Record<string, unknown>)._voiceSearchHelper).toBe(
+        voiceHelper
+      );
     });
   });
 

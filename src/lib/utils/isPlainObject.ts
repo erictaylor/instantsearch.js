@@ -21,7 +21,7 @@ function isObjectLike(value: any): boolean {
  * A plain object is an object created by the `Object`
  * constructor or with a `[[Prototype]]` of `null`.
  */
-function isPlainObject(value: any): boolean {
+function isPlainObject(value: any): value is Record<string, unknown> {
   if (!isObjectLike(value) || getTag(value) !== '[object Object]') {
     return false;
   }
