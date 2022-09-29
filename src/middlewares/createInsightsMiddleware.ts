@@ -109,7 +109,7 @@ export const createInsightsMiddleware: CreateInsightsMiddleware = (props) => {
       started() {
         insightsClient('addAlgoliaAgent', 'insights-middleware');
 
-        helper = instantSearchInstance.helper!;
+        helper = instantSearchInstance.mainHelper!;
 
         initialParameters = {
           userToken: (helper.state as PlainSearchParameters).userToken,
